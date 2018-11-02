@@ -2,35 +2,25 @@ import React, { Component } from 'react';
 
 import '../App.css';
 import TabList from './TabList';
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
+
 
 export default class TabContent extends Component {
     render() {
-        const options = {
-            title: {
-              text: 'My chart'
-            },
-            series: [{
-              data: [1, 2, 3]
-            }]
-          }
+      
      
         return (
                 <div className="container up">
                      <TabList>
-                        <div period="1_MIN" label="One Minute" className="tab-content">
-                            <HighchartsReact
-                            highcharts={Highcharts}
-                            options={options}/>
+                        <div period="1_MIN" label="1 minute" className="tab-content">
+                           
                         </div>
-                        <div period="5_MIN" label="Five Minute" className="tab-content">
+                        <div period="5_MIN" label="5 minutes" className="tab-content">
                          
                         </div>
-                        <div period="1_HOUR" label="One Hour" className="tab-content">
+                        <div period="1_HOUR" label="1 hour" className="tab-content">
                           
                         </div>
-                        <div period="1_WEEK" label="One Week" className="tab-content">
+                        <div period="1_WEEK" label="1 week" className="tab-content">
                        
                         </div>
                     </TabList>

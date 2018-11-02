@@ -46,6 +46,7 @@ export default class TabList extends Component {
             {children.map((child) => {
                 if (child.props.label !== activeTab) return undefined;
                 return child.props.children;
+                
             })}
             </div>
       </div>
