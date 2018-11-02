@@ -10,14 +10,17 @@ export default class TabList extends Component {
 
   constructor(props) {
     super(props);
-
+    this.refreshData = props.refreshData;
     this.state = {
       activeTab: this.props.children[0].props.label,
     };
   }
 
-  onClickTabItem = (tab) => {
+  onClickTabItem = (tab, period) => {
+
     this.setState({ activeTab: tab });
+
+    this.refreshData(period);
   }
 
   render() {
