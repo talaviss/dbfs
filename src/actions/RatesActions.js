@@ -1,9 +1,9 @@
-import Axios from 'axios';
-import { REQUEST_RATES_DATA_RECEIVED } from '../actiontypes/RatesActionTypes';
+import Axios from "axios";
+import { REQUEST_RATES_DATA_RECEIVED } from "../actiontypes/RatesActionTypes";
 
 function fetchExchangeRates(dispatch, period, tab) {
   const url = `https://www.fxempire.com/api/v1/en/markets/eur-usd/chart?time=${period}`;
-  console.log(url);
+  //console.log(url);
   return Axios.get(url)
     .then(response => {
       let ratesData = {
@@ -38,7 +38,6 @@ function fetchExchangeRates(dispatch, period, tab) {
     });
 }
 
-
 function requestRatesReceived(data) {
   return {
     type: REQUEST_RATES_DATA_RECEIVED,
@@ -46,11 +45,8 @@ function requestRatesReceived(data) {
   };
 }
 
-
-
 export function requestRatesWithPeriod(period, tab) {
   return function inner(dispatch) {
-
     return fetchExchangeRates(dispatch, period, tab);
   };
 }
