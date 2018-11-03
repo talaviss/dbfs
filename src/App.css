@@ -7,7 +7,6 @@
   height: 40vmin;
 }
 
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -32,7 +31,12 @@
   }
 }
 
-
 .up {
-  margin-top: 50px
+  margin-top: 50px;
+}
+
+.head-title {
+  font-size: calc(14px + 2vmin);
+  color: white;
+  padding-bottom: 40px;
 }

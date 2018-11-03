@@ -12,14 +12,14 @@ const initialState = {
 export default function rates(state = initialState, action) {
   switch (action.type) {
   case REQUEST_RATES_DATA_RECEIVED:
-    return {
-      open: action.payload.open,
-      close: action.payload.close,
-      low: action.payload.low,
-      high: action.payload.high,
-      period: action.payload.period,  
-      tab: action.payload.tab   
-    };
+  return Object.assign({}, state, {
+    open: action.payload.open,
+    close: action.payload.close,
+    low: action.payload.low,
+    high: action.payload.high,
+    period: action.payload.period,  
+    tab: action.payload.tab  
+  });
   default:
     return state;
   }
