@@ -31,8 +31,6 @@ function fetchExchangeRates(dispatch, period, tab) {
       sort(ratesData.open);
       sort(ratesData.close);
 
-  
-      console.log('before dispatch');
       return dispatch(requestRatesReceived(ratesData));
     })
     .catch(error => {

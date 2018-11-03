@@ -18,7 +18,8 @@ export default function rates(state = initialState, action) {
     low: action.payload.low,
     high: action.payload.high,
     period: action.payload.period,  
-    tab: action.payload.tab  
+    tab: action.payload.tab,
+    timestamp: Date.now()
   });
   default:
     return state;

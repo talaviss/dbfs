@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Tab from './Tab';
-import {getOptions} from './ChartOptions'
+import { getOptions } from './ChartOptions';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as RatesActions from '../actions/RatesActions';
 
-export  class TabList extends Component {
+export class TabList extends Component {
   static propTypes = {
     children: PropTypes.instanceOf(Array).isRequired,
   };
@@ -16,14 +16,11 @@ export  class TabList extends Component {
     super(props);
 
     this.onClickTabItem = this.onClickTabItem.bind(this);
-
   }
 
   onClickTabItem = (tab, period) => {
     this.props.actions.requestRatesWithPeriod(period, tab);
   };
-
-
 
   componentDidMount() {
     this.props.actions.requestRatesWithPeriod('MIN_1');
@@ -34,9 +31,9 @@ export  class TabList extends Component {
       onClickTabItem,
       props: { children },
     } = this;
- 
+
     let activeTab = this.props.rates.tab || this.props.children[0].props.label;
-    const options = getOptions(this.props.rates)
+    const options = getOptions(this.props.rates);
     return (
       <div>
         <nav>
@@ -59,8 +56,7 @@ export  class TabList extends Component {
         <div className="tab-content">
           {children.map(child => {
             if (child.props.label !== activeTab) return undefined;
-
-            Object.assign(child.props.children.props.options, options);
+            child.props.children.props.onUpdate(options);
             return child.props.children;
           })}
         </div>

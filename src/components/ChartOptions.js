@@ -4,6 +4,7 @@ export function getOptions(rates) {
       return [];
     }
     const options = {
+      timestamp: rates.timestamp,
       title: {
         text: 'EUR/USD Exchange rates',
       },
