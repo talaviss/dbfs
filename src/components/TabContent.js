@@ -20,13 +20,12 @@ export default class TabContent extends Component {
 
 
     render() {
-        console.log('render' +this.state.refresh);
-   
+
         var options = {}
         
         return (
                 <div className="container up">
-                     <TabList refreshData={this.onRefreshData}>
+                     <TabList >
                         <div period="MIN_1" label="1 minute" className="tab-content">
                             <HighchartsReact
                            

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Axios from 'axios';
 import Tab from './Tab';
+import Highcharts from 'highcharts/highstock'
 
 export default class TabList extends Component {
   static propTypes = {
@@ -16,20 +17,17 @@ export default class TabList extends Component {
     this.state = {
       activeTab: this.props.children[0].props.label,
     };
+    //this.onRefreshData('MIN_1');
   }
 
+  onClickTabItem = (tab, period) => {
+    console.log('aaa')
+    this.setState({ activeTab: tab });
+    this.onRefreshData(period);
+  }
 
   componentDidMount(){
-    this.onRefreshData('');
-
-    console.log('tab content componentDidMount');
-   
-}
-  onClickTabItem = (tab, period) => {
-
-    this.setState({ activeTab: tab });
-
-    this.onRefreshData(period);
+    //this.onRefreshData('MIN_1');
   }
 
   getOptions(){
@@ -42,8 +40,23 @@ export default class TabList extends Component {
           text: 'EUR/USD Exchange rates'
         },
         xAxis: {
-            type: 'datetime',
-            tickInterval: 1,
+          type: 'datetime',
+          labels: {
+            formatter: function() {
+                return Highcharts.dateFormat('%a %e %b - %H %M %S', this.value);
+            },
+         
+          },
+
+          tickInterval: 1,
+      
+          style: {
+              fontSize: '8px'
+          }
+        },
+        tooltip: {
+          xDateFormat: '%Y-%m-%d %H:%M',
+          shared: true
         },
         series: [{
           name: 'open',
@@ -70,9 +83,9 @@ export default class TabList extends Component {
 
 
 onRefreshData(period){
-    console.log(period)
+    //console.log(period)
     function sort(arr){
-        arr.sort((a,b) => (a.date > b.date) ? 1 : ((b.date > a.date) ? -1 : 0));
+        arr.sort((a,b) => (a[0] > b[0]) ? 1 : (b[0] > a[0] ? -1 : 0));
     }
     const url = `https://www.fxempire.com/api/v1/en/markets/eur-usd/chart?time=${period}`;
     console.log(url);
@@ -93,16 +106,17 @@ onRefreshData(period){
         chartsData.low = response.data.map((info) => { 
             return [ info.date,  info.close];
         })
-        //console.log(chartsData)
+   
         sort(chartsData.low); 
         sort(chartsData.high);  
         sort(chartsData.open); 
         sort(chartsData.close);  
+  
         this.setState({
-            refresh : !this.state.refresh,
             chartsData 
         })
-      
+        console.log('after')
+
        
     })
     .catch(error => {
@@ -114,6 +128,8 @@ onRefreshData(period){
   render() {
     const { onClickTabItem, props: {children},state: {activeTab} } = this;
     const options = this.getOptions();
+    console.log('render')
+    //console.log(options)
     return (
         <div>
             <nav>
@@ -137,9 +153,8 @@ onRefreshData(period){
             {children.map((child) => {
                 if (child.props.label !== activeTab) return undefined;
                // if(child.props.children.props.options)
-                child.props.children.props.options.series = options.series;
-                child.props.children.props.options.xAxis = options.xAxis;
-                child.props.children.props.options.title = options.title;
+               Object.assign(child.props.children.props.options,options)
+                
                 return child.props.children;
                 
             })}
